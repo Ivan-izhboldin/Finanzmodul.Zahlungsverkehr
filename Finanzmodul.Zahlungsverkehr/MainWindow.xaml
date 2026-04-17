@@ -1,0 +1,35 @@
+﻿<Window x:Class="Finanzmodul.Zahlungsverkehr.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Zahlungsverkehr-Validierung" Height="500" Width="900">
+    <Grid>
+        <DockPanel Margin="10">
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,10">
+                <Button x:Name="BtnImport" Content="CSV Importieren" Click="BtnImport_Click" Padding="15,7"/>
+                <TextBlock x:Name="TxtStatus" Text="Bereit" Margin="20,0,0,0" VerticalAlignment="Center" Foreground="Gray"/>
+            </StackPanel>
+
+            <DataGrid x:Name="DgvTransaktionen" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True">
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IstValide}" Value="False">
+                                <Setter Property="Background" Value="#FFFDCECE"/>
+                                <Setter Property="Foreground" Value="DarkRed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="IBAN" Binding="{Binding Iban}" Width="2*"/>
+                    <DataGridTextColumn Header="Betrag" Binding="{Binding Betrag, StringFormat={}{0:C}, ConverterCulture=de-DE}" Width="1*"/>
+                    <DataGridTextColumn Header="Datum" Binding="{Binding Datum, StringFormat={}{0:dd.MM.yyyy}}" Width="1*"/>
+                    <DataGridTextColumn Header="Validierung" Binding="{Binding ValidierungsMeldung}" Width="2*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </DockPanel>
+    </Grid>
+</Window>
